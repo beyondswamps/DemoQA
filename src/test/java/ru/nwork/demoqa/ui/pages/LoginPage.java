@@ -1,18 +1,39 @@
 package ru.nwork.demoqa.ui.pages;
 
+import static com.codeborne.selenide.Condition.clickable;
+import static com.codeborne.selenide.Condition.interactable;
+import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.open;
 import com.codeborne.selenide.SelenideElement;
-import org.openqa.selenium.support.FindBy;
+import ru.nwork.demoqa.ui.data.User;
 
 public class LoginPage {
     private final static String URL = "/login";
 
-    @FindBy(css = "#userName")
-    public SelenideElement userName;
+    public SelenideElement username = $("#userName").shouldBe(visible);
+    public SelenideElement password = $("#password").should(visible);
+    public SelenideElement submitButton = $("button#login").shouldBe(clickable);
 
-    @FindBy(css = "#password")
-    public SelenideElement password;
+    public LoginPage() {}
 
-    @FindBy(css="button#login")
-    public SelenideElement submitButton;
+    public static LoginPage openLoginPage() {
+        open(URL);
+        return new LoginPage();
+    }
+
+    public ProfilePage loginUsernamePassword(String userName, String password) {
+        this.username.sendKeys(userName);
+        this.password.sendKeys(password);
+        submitButton.click();
+        return new ProfilePage();
+    }
+
+    public ProfilePage login(User user) {
+        username.shouldBe(interactable).sendKeys(user.username());
+        password.shouldBe(interactable).sendKeys(user.password());
+        submitButton.shouldBe(clickable).click();
+        return new ProfilePage();
+    }
 
 }
