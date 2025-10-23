@@ -3,8 +3,6 @@ package ru.nwork.demoqa.ui.util;
 import com.github.javafaker.Faker;
 import ru.nwork.demoqa.ui.data.User;
 
-import java.util.Locale;
-
 public class UsersHelper {
     public static Faker userFaker = new Faker();
 
@@ -15,8 +13,7 @@ public class UsersHelper {
                 userFaker.name().firstName(),
                 userFaker.name().lastName(),
                 userFaker.name().username().toLowerCase().replace(".", ""),
-                userFaker.internet().password(8,9,true, true, true) + "9Yj="
+                userFaker.internet().password(8,9,true, true, true) + "P@5s"
         );
     }
-
 }
