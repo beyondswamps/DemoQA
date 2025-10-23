@@ -31,15 +31,6 @@ public class RegisterPage {
 
     public RegisterPage() {}
 
-    public LoginPage register(User user) {
-        firstnameInput.setValue(user.firstName());
-        lastnameInput.setValue(user.lastName());
-        usernameInput.setValue(user.username());
-        passwordInput.setValue(user.password());
-        registerButton.click();
-        return new LoginPage();
-    }
-
     public RegisterPage fillFieldsWithUser(User user) {
         firstnameInput.shouldBe(editable).setValue(user.firstName());
         lastnameInput.shouldBe(editable).setValue(user.lastName());
@@ -48,12 +39,12 @@ public class RegisterPage {
         return this;
     }
 
-    public RegisterPage clickRegister() {
+    public RegisterPage submitRegister() {
         registerButton.shouldBe(interactable).pressEnter();
-        return new RegisterPage();
+        return this;
     }
 
-    public RegisterPage clickRecaptcha() {
+    public RegisterPage passRecaptcha() {
         SelenideElement frame = $x("//iframe[@title='reCAPTCHA']");
         switchTo().frame(frame);
         $(".recaptcha-checkbox-border").shouldBe(clickable).click();

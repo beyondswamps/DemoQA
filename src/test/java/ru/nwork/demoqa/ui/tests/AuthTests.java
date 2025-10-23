@@ -5,14 +5,15 @@ import org.junit.jupiter.api.Test;
 import ru.nwork.demoqa.ui.data.User;
 import ru.nwork.demoqa.ui.pages.LoginPage;
 import ru.nwork.demoqa.ui.pages.ProfilePage;
+import ru.nwork.demoqa.ui.pages.RegisterPage;
 import ru.nwork.demoqa.ui.util.UsersHelper;
 
-import static com.codeborne.selenide.Condition.clickable;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.switchTo;
 import static ru.nwork.demoqa.ui.pages.RegisterPage.openRegisterPage;
 
 public class AuthTests extends BaseTest{
+
 
     @Test
     public void registerUserSuccessfulTest() {
@@ -20,13 +21,9 @@ public class AuthTests extends BaseTest{
         System.out.println(user);      //may be logged
         openRegisterPage()
                 .fillFieldsWithUser(user)
-                .clickRecaptcha()
-                .clickRegister();
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+                .passRecaptcha()
+                .submitRegister();
+
         String alertText = switchTo().alert().getText();
         switchTo().alert().accept();
 
@@ -39,27 +36,44 @@ public class AuthTests extends BaseTest{
 
         ProfilePage profilePage = LoginPage
                 .openLoginPage()
-                .loginUsernamePassword(user.username(), user.password());
-        String loggedUsername = profilePage.getUsernameLogged().text();
-        String logoutButtonText = profilePage.getLogoutButton().text();
+                .loginRegisteredUser(user);
 
-        Assertions.assertEquals(user.username(), loggedUsername);
-        Assertions.assertEquals("Log out", logoutButtonText);
+        Assertions.assertEquals(user.username(), profilePage.getUsernameLogged());
+        Assertions.assertEquals("Log out", profilePage.getLogoutButtonText());
     }
 
     @Test
     public void logoutSuccessfulTest() {
         User user = UsersHelper.registeredUser;
-        LoginPage.openLoginPage()
-                .login(user)
-                .getLogoutButton().shouldBe(clickable)
-                .click();
-        LoginPage loginPage = new LoginPage();
+        LoginPage loginPage = LoginPage.openLoginPage()
+                .loginRegisteredUser(user)
+                .logout();
 
         Assertions.assertEquals("Login", loginPage.submitButton.text());
         Assertions.assertEquals("Login", $("h1.text-center").text());
         Assertions.assertEquals("Login in Book Store", $("form h5").text());
 
     }
+
+    @Test
+    public void registerLoginDeleteUserSuccessfulTest() {
+        User user = UsersHelper.createUser();
+
+        RegisterPage
+                .openRegisterPage()
+                .fillFieldsWithUser(user)
+                .passRecaptcha()
+                .submitRegister();
+
+        String wrongCredsError = LoginPage
+                .openLoginPage()
+                .loginRegisteredUser(user)
+                .deleteAccount()
+                .loginUnregisteredUser(user);
+
+        Assertions.assertEquals("Invalid username or password!", wrongCredsError);
+    }
+
+
 }
 
