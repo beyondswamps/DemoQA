@@ -1,6 +1,7 @@
 package ru.nwork.demoqa.ui.pages;
 
 import com.codeborne.selenide.SelenideElement;
+import org.openqa.selenium.Keys;
 import ru.nwork.demoqa.ui.data.User;
 
 import static com.codeborne.selenide.Condition.clickable;
@@ -46,6 +47,7 @@ public class RegisterPage {
 
     public RegisterPage passRecaptcha() {
         SelenideElement frame = $x("//iframe[@title='reCAPTCHA']");
+        frame.scrollTo();
         switchTo().frame(frame);
         $(".recaptcha-checkbox-border").shouldBe(clickable).click();
         $(".recaptcha-checkbox-checked").shouldBe(visible);

@@ -1,12 +1,22 @@
 plugins {
     id 'java'
+    id 'io.qameta.allure' version '2.12.0'
 }
 
 group = 'ru.nwork'
 version = '1.0-SNAPSHOT'
 
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17);
+    }
+}
+
 ext {
     lombokVersion = '1.18.42'
+    junitVersion = '5.10.3'
+    selenideVersion = '7.8.1'
+    allureVersion = '2.28.1'
 }
 
 repositories {
@@ -15,10 +25,17 @@ repositories {
 
 dependencies {
     testImplementation(
-            platform('org.junit:junit-bom:5.10.0'),
+            platform("org.junit:junit-bom:${junitVersion}"),
             'org.junit.jupiter:junit-jupiter',
-            "com.codeborne:selenide:7.8.1",
-            'com.github.javafaker:javafaker:1.0.2')
+            "com.codeborne:selenide:${selenideVersion}",
+            'com.github.javafaker:javafaker:1.0.2',
+            platform("io.qameta.allure:allure-bom:${allureVersion}"),
+            "io.qameta.allure:allure-junit5:${allureVersion}"
+    )
+
+    testRuntimeOnly(
+            "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
+    )
 
     testCompileOnly(
             "org.projectlombok:lombok:${lombokVersion}"
