@@ -20,6 +20,7 @@ import static ru.nwork.demoqa.ui.pages.RegisterPage.openRegisterPage;
 
 @Feature("demoqa.com")
 @Story("Регистрация пользователя, логин, удаление аккаунта")
+@DisplayName("Регистрация пользователя, логин, удаление аккаунта")
 @Tags({@Tag("Auth"), @Tag("User")})
 public class AuthTests extends BaseTest{
 

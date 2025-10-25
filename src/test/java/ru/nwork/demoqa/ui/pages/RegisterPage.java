@@ -1,7 +1,7 @@
 package ru.nwork.demoqa.ui.pages;
 
 import com.codeborne.selenide.SelenideElement;
-import org.openqa.selenium.Keys;
+import io.qameta.allure.Step;
 import ru.nwork.demoqa.ui.data.User;
 
 import static com.codeborne.selenide.Condition.clickable;
@@ -25,6 +25,7 @@ public class RegisterPage {
 
     private final SelenideElement captcha = $("#recaptcha-anchor");
 
+    @Step("Открыть страницу регистрации пользователя")
     public static RegisterPage openRegisterPage() {
         open(URL);
         return new RegisterPage();
@@ -32,6 +33,7 @@ public class RegisterPage {
 
     public RegisterPage() {}
 
+    @Step("Заполнить поля пользователя для регистрации")
     public RegisterPage fillFieldsWithUser(User user) {
         firstnameInput.shouldBe(editable).setValue(user.firstName());
         lastnameInput.shouldBe(editable).setValue(user.lastName());
@@ -40,11 +42,13 @@ public class RegisterPage {
         return this;
     }
 
+    @Step("Создать пользователя")
     public RegisterPage submitRegister() {
         registerButton.shouldBe(interactable).pressEnter();
         return this;
     }
 
+    @Step("Пройти Google reCAPTCHA")
     public RegisterPage passRecaptcha() {
         SelenideElement frame = $x("//iframe[@title='reCAPTCHA']");
         frame.scrollTo();

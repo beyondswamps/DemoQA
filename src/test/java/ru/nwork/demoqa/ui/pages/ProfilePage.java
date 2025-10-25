@@ -1,6 +1,7 @@
 package ru.nwork.demoqa.ui.pages;
 
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Step;
 
 import static com.codeborne.selenide.Condition.clickable;
 import static com.codeborne.selenide.Condition.interactable;
@@ -19,11 +20,13 @@ public class ProfilePage {
         return logoutButton.text();
     }
 
+    @Step("Выйти из аккаунта")
     public LoginPage logout() {
         logoutButton.shouldBe(clickable).click();
         return new LoginPage();
     }
 
+    @Step("Удалить аккаунт")
     public LoginPage deleteAccount() {
         deleteAccountButton.shouldBe(interactable).pressEnter();
         $("#closeSmallModal-ok").shouldBe(clickable).click();

@@ -6,8 +6,8 @@ import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 
-import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Step;
 import ru.nwork.demoqa.ui.data.User;
 
 public class LoginPage {
@@ -20,28 +20,24 @@ public class LoginPage {
 
     public LoginPage() {}
 
+    @Step("Открыть страницу логина")
     public static LoginPage openLoginPage() {
         open(URL);
         return new LoginPage();
     }
 
-    public ProfilePage loginUsernamePassword(String userName, String password) {
-        this.username.sendKeys(userName);
-        this.password.sendKeys(password);
-        submitButton.click();
-        return new ProfilePage();
-    }
-
+    @Step("Успешная аутентификация зарегистрированным пользователем")
     public ProfilePage loginRegisteredUser(User user) {
-        username.shouldBe(interactable).sendKeys(user.username());
-        password.shouldBe(interactable).sendKeys(user.password());
+        username.shouldBe(interactable).setValue(user.username());
+        password.shouldBe(interactable).setValue(user.password());
         submitButton.shouldBe(clickable).click();
         return new ProfilePage();
     }
 
+    @Step("Неудачная аутентификация. Неверный логин или пароль")
     public String loginUnregisteredUser(User user) {
-        username.shouldBe(interactable).sendKeys(user.username());
-        password.shouldBe(interactable).sendKeys(user.password());
+        username.shouldBe(interactable).setValue(user.username());
+        password.shouldBe(interactable).setValue(user.password());
         submitButton.shouldBe(clickable).click();
         return wrongCredsMessageElem.shouldBe(visible).text();
     }
