@@ -31,7 +31,8 @@ public class RegisterPage {
         return new RegisterPage();
     }
 
-    public RegisterPage() {}
+    public RegisterPage() {
+    }
 
     @Step("Заполнить поля пользователя для регистрации")
     public RegisterPage fillFieldsWithUser(User user) {
@@ -44,7 +45,7 @@ public class RegisterPage {
 
     @Step("Создать пользователя")
     public RegisterPage submitRegister() {
-        registerButton.shouldBe(interactable).pressEnter();
+        registerButton.scrollIntoCenter().shouldBe(interactable).pressEnter();
         return this;
     }
 

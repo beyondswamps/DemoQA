@@ -14,11 +14,10 @@ import ru.nwork.demoqa.ui.pages.ProfilePage;
 import ru.nwork.demoqa.ui.pages.RegisterPage;
 import ru.nwork.demoqa.ui.util.UsersHelper;
 
-import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.switchTo;
 import static ru.nwork.demoqa.ui.pages.RegisterPage.openRegisterPage;
 
-@Feature("demoqa.com")
+@Feature("Bookstore")
 @Story("Регистрация пользователя, логин, удаление аккаунта")
 @DisplayName("Регистрация пользователя, логин, удаление аккаунта")
 @Tags({@Tag("Auth"), @Tag("User")})
@@ -64,9 +63,9 @@ public class AuthTests extends BaseTest{
                 .loginRegisteredUser(user)
                 .logout();
 
-        Assertions.assertEquals("Login", loginPage.submitButton.text());
-        Assertions.assertEquals("Login", $("h1.text-center").text());
-        Assertions.assertEquals("Login in Book Store", $("form h5").text());
+        Assertions.assertEquals("Login", loginPage.getLoginButtonText());
+        Assertions.assertEquals("Login", loginPage.getPageBannerText());
+        Assertions.assertEquals("Login in Book Store", loginPage.getWelcomeLoginText());
 
     }
 

@@ -7,6 +7,7 @@ import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Feature;
 import io.qameta.allure.Step;
 import ru.nwork.demoqa.ui.data.User;
 
@@ -18,7 +19,8 @@ public class LoginPage {
     public SelenideElement submitButton = $("button#login").shouldBe(clickable);
     public SelenideElement wrongCredsMessageElem = $("#name");
 
-    public LoginPage() {}
+    public LoginPage() {
+    }
 
     @Step("Открыть страницу логина")
     public static LoginPage openLoginPage() {
@@ -30,7 +32,7 @@ public class LoginPage {
     public ProfilePage loginRegisteredUser(User user) {
         username.shouldBe(interactable).setValue(user.username());
         password.shouldBe(interactable).setValue(user.password());
-        submitButton.shouldBe(clickable).click();
+        submitButton.scrollIntoCenter().shouldBe(clickable).click();
         return new ProfilePage();
     }
 
@@ -38,8 +40,22 @@ public class LoginPage {
     public String loginUnregisteredUser(User user) {
         username.shouldBe(interactable).setValue(user.username());
         password.shouldBe(interactable).setValue(user.password());
-        submitButton.shouldBe(clickable).click();
+        submitButton.scrollIntoCenter().shouldBe(clickable).click();
         return wrongCredsMessageElem.shouldBe(visible).text();
     }
 
+    @Step("Текст кнопки логина")
+    public String getLoginButtonText() {
+        return submitButton.text();
+    }
+
+    @Step("Текст заголовка на странице логина")
+    public String getPageBannerText() {
+        return $("h1.text-center").text();
+    }
+
+    @Step("Текст приглашения логина")
+    public String getWelcomeLoginText() {
+        return $("form h5").text();
+    }
 }

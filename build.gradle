@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'io.qameta.allure' version '2.12.0'
+    id("org.gradle.test-retry") version "1.6.4"
 }
 
 group = 'ru.nwork'
@@ -15,7 +16,7 @@ java {
 ext {
     lombokVersion = '1.18.42'
     junitVersion = '5.10.3'
-    selenideVersion = '7.8.1'
+    selenideVersion = '7.10.1'
     allureVersion = '2.28.1'
 }
 
@@ -52,4 +53,14 @@ test {
         systemProperty("junit.jupiter.execution.parallel.enabled", "true")
     }
     useJUnitPlatform()
+    retry {
+        maxRetries = 3
+        maxFailures = 5
+        failOnPassedAfterRetry = true
+        failOnSkippedAfterRetry = true
+    }
+    testLogging {
+        events "passed", "skipped", "failed", "standardOut", "standardError"
+        exceptionFormat "full"
+    }
 }

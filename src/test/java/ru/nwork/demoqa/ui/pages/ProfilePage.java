@@ -12,10 +12,12 @@ public class ProfilePage {
     private final SelenideElement logoutButton = $("button#submit");
     private final SelenideElement deleteAccountButton = $(".text-center #submit");
 
+    @Step("Юзернейм залогиненного пользователя со страницы профиля")
     public String getUsernameLogged() {
         return usernameLogged.text();
     }
 
+    @Step("Текст кнопки логаута")
     public String getLogoutButtonText() {
         return logoutButton.text();
     }
