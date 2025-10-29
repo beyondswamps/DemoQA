@@ -54,6 +54,7 @@ dependencies {
 test {
     tasks.test {
         systemProperty("junit.jupiter.execution.parallel.enabled", "true")
+        systemProperty("file.encoding", "utf-8")
     }
     useJUnitPlatform()
     retry {

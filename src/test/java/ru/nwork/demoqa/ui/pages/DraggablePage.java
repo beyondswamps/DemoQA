@@ -14,7 +14,7 @@ import static com.codeborne.selenide.Selenide.open;
 
 @Getter
 public class DraggablePage {
-    private static final String URL = "/elements";
+    private static final String URL = "/interaction";
 
     private final SelenideElement simpleTab = $("#draggableExample-tab-simple");
     private final SelenideElement axisRestrictedTab = $("#draggableExample-tab-axisRestriction");
@@ -31,8 +31,7 @@ public class DraggablePage {
     @Step("Открыть страницу Draggable")
     public static DraggablePage openDraggablePage() {
         open(URL);
-        $x("//div[text()='Interactions']").scrollIntoCenter().shouldBe(clickable).click();
-        $x("//span[text()='Dragabble']").scrollIntoCenter().shouldBe(clickable).click();
+        $x("//span[text()='Dragabble']").scrollTo().shouldBe(clickable).click();
         return new DraggablePage();
     }
 
