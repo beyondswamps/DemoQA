@@ -9,7 +9,7 @@ import lombok.Setter;
 @Builder
 @Setter
 @Getter
-public class UserForRegister {
+public class UserCreds {
     public String userName;
     public String password;
 }

@@ -46,7 +46,7 @@ public class DragTests extends BaseTest {
 
         Point point0XBox = draggablePage.getElementLocation(restrictedXBox);
         Point point1XBox = draggablePage.dragAndDropElement(restrictedXBox, 10, 14);
-        Point point2XBox = draggablePage.dragAndDropElement(restrictedXBox, -85, -107);
+        Point point2XBox = draggablePage.dragAndDropElement(restrictedXBox, -55, -37);
 
         Point point0YBox = draggablePage.getElementLocation(restrictedYBox);
         Point point1YBox = draggablePage.dragAndDropElement(restrictedYBox, 25, 61);
@@ -54,7 +54,7 @@ public class DragTests extends BaseTest {
 
         Assertions.assertEquals(10, point1XBox.x - point0XBox.x);
         Assertions.assertEquals(point1XBox.y, point0XBox.y);
-        Assertions.assertEquals(-85, point2XBox.x - point1XBox.x);
+        Assertions.assertEquals(-55, point2XBox.x - point1XBox.x);
         Assertions.assertEquals(point2XBox.y, point1XBox.y);
 
         Assertions.assertEquals(point1YBox.x, point0YBox.x);

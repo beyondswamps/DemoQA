@@ -14,6 +14,10 @@ public class Specifications {
         RestAssured.responseSpecification = respSpec;
     }
 
+    public static void setRespSpec(ResponseSpecification respSpec) {
+        RestAssured.responseSpecification = respSpec;
+    }
+
     public static RequestSpecification requestSpecification(String url) {
         return new RequestSpecBuilder()
                 .setBaseUri(url)
@@ -27,9 +31,21 @@ public class Specifications {
                 .build();
     }
 
-    public static ResponseSpecification responseSpecificationOk201() {
+    public static ResponseSpecification responseSpecificationCreated201() {
         return new ResponseSpecBuilder()
                 .expectStatusCode(201)
+                .build();
+    }
+
+    public static ResponseSpecification responseSpecificationBad400() {
+        return new ResponseSpecBuilder()
+                .expectStatusCode(400)
+                .build();
+    }
+
+    public static ResponseSpecification responseSpecificationNotFound404() {
+        return new ResponseSpecBuilder()
+                .expectStatusCode(404)
                 .build();
     }
 }

@@ -1,7 +1,7 @@
 package ru.nwork.demoqa.api.util;
 
 import com.github.javafaker.Faker;
-import ru.nwork.demoqa.api.models.UserForRegister;
+import ru.nwork.demoqa.api.models.UserCreds;
 import ru.nwork.demoqa.api.models.UserFull;
 
 public class UsersHelper {
@@ -13,10 +13,10 @@ public class UsersHelper {
             .password("")
             .build();
 
-    public static UserForRegister createUserReg() {
-        return new UserForRegister(
+    public static UserCreds createUserReg() {
+        return new UserCreds(
                 userFaker.name().username().toLowerCase().replace(".", ""),
-                userFaker.internet().password(8,9,true, true, true) + "P@5s"
+                "123456Qq!"
         );
     }
 }

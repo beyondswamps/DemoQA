@@ -1,4 +1,4 @@
-package ru.nwork.demoqa.api.specifications;
+package ru.nwork.reqres.specifications;
 
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
@@ -9,19 +9,11 @@ import io.restassured.specification.ResponseSpecification;
 
 public class Specifications {
 
-    public static void setSpecifications(RequestSpecification reqSpec, ResponseSpecification respSpec) {
-        RestAssured.requestSpecification = reqSpec;
-        RestAssured.responseSpecification = respSpec;
-    }
-
-    public static void setRespSpec(ResponseSpecification respSpec) {
-        RestAssured.responseSpecification = respSpec;
-    }
-
     public static RequestSpecification requestSpecification(String url) {
         return new RequestSpecBuilder()
                 .setBaseUri(url)
                 .setContentType(ContentType.JSON)
+                .addHeader("x-api-key", "reqres-free-v1")
                 .build();
     }
 

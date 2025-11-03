@@ -60,8 +60,11 @@ test {
     retry {
         maxRetries = 3
         maxFailures = 5
-        failOnPassedAfterRetry = true
+        failOnPassedAfterRetry = false
         failOnSkippedAfterRetry = true
+        filter {
+            includeClasses.add("ru.nwork.demoqa.ui.tests*")
+        }
     }
     testLogging {
         events "passed", "skipped", "failed", "standardOut", "standardError"

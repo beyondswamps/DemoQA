@@ -1,4 +1,6 @@
-package ru.nwork.reqres.responces;
+package ru.nwork.reqres.responses;
 
 public class RegisterResponse {
+    public String id;
+    public String token;
 }
