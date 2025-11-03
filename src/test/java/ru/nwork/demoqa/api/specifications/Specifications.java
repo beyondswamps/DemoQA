@@ -9,15 +9,6 @@ import io.restassured.specification.ResponseSpecification;
 
 public class Specifications {
 
-    public static void setSpecifications(RequestSpecification reqSpec, ResponseSpecification respSpec) {
-        RestAssured.requestSpecification = reqSpec;
-        RestAssured.responseSpecification = respSpec;
-    }
-
-    public static void setRespSpec(ResponseSpecification respSpec) {
-        RestAssured.responseSpecification = respSpec;
-    }
-
     public static RequestSpecification requestSpecification(String url) {
         return new RequestSpecBuilder()
                 .setBaseUri(url)

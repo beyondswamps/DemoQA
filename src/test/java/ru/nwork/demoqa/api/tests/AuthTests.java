@@ -3,6 +3,8 @@ package ru.nwork.demoqa.api.tests;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Owner;
 import io.qameta.allure.Story;
+import io.restassured.specification.RequestSpecification;
+import io.restassured.specification.ResponseSpecification;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,10 +16,6 @@ import ru.nwork.demoqa.api.specifications.Specifications;
 import ru.nwork.demoqa.api.util.UsersHelper;
 
 import static io.restassured.RestAssured.given;
-import static ru.nwork.demoqa.api.specifications.Specifications.requestSpecification;
-import static ru.nwork.demoqa.api.specifications.Specifications.responseSpecificationCreated201;
-import static ru.nwork.demoqa.api.specifications.Specifications.responseSpecificationNotFound404;
-import static ru.nwork.demoqa.api.specifications.Specifications.responseSpecificationOk200;
 
 @Feature("Bookstore-RestApi")
 @Story("Тестирование api")
@@ -29,17 +27,21 @@ public class AuthTests {
     @DisplayName("Регистрация нового пользователя")
     @Owner("Oleg Zabolotnykh<beyondswamps@gmail.com>")
     public void registerTest() {
-        Specifications.setSpecifications(requestSpecification(URL), responseSpecificationCreated201());
+        RequestSpecification requestSpec = Specifications.requestSpecification(URL);
+        ResponseSpecification responseSpec = Specifications.responseSpecificationCreated201();
 
         UserCreds newUser = UsersHelper.createUserReg();
 
-        UserRegistered userRegistered = given()
-                .body(newUser)
+        UserRegistered userRegistered =
+                given()
+                        .spec(requestSpec)
+                        .body(newUser)
                 .when()
-                .post("/Account/v1/user")
+                        .post("/Account/v1/user")
                 .then()
-                .log().all()
-                .extract().as(UserRegistered.class);
+                        .log().all()
+                        .spec(responseSpec)
+                        .extract().as(UserRegistered.class);
 
         Assertions.assertEquals(newUser.userName, userRegistered.username);
     }
@@ -48,16 +50,20 @@ public class AuthTests {
     @DisplayName("Authorize незарегистрированного пользователя")
     @Owner("Oleg Zabolotnykh<beyondswamps@gmail.com>")
     public void notAuthorized() {
-        Specifications.setSpecifications(requestSpecification(URL), responseSpecificationNotFound404());
+        RequestSpecification requestSpec = Specifications.requestSpecification(URL);
+        ResponseSpecification responseSpec = Specifications.responseSpecificationNotFound404();
         UserCreds userCreds = UsersHelper.createUserReg();
 
-        ErrorResponse errorResponse = given()
-                .body(userCreds)
+        ErrorResponse errorResponse =
+                given()
+                        .spec(requestSpec)
+                        .body(userCreds)
                 .when()
-                .post("/Account/v1/Authorized")
+                        .post("/Account/v1/Authorized")
                 .then()
-                .log().all()
-                .extract().as(ErrorResponse.class);
+                        .log().all()
+                        .spec(responseSpec)
+                        .extract().as(ErrorResponse.class);
 
         Assertions.assertEquals("User not found!", errorResponse.getMessage());
         Assertions.assertEquals("1207", errorResponse.getCode());
@@ -67,26 +73,33 @@ public class AuthTests {
     @DisplayName("Authorize зарегистрированного пользователя без токена")
     @Owner("Oleg Zabolotnykh<beyondswamps@gmail.com>")
     public void notAuthorizedWithoutToken() {
-        Specifications.setSpecifications(requestSpecification(URL), responseSpecificationCreated201());
+        RequestSpecification requestSpec = Specifications.requestSpecification(URL);
+        ResponseSpecification responseSpec = Specifications.responseSpecificationCreated201();
         UserCreds userCreds = UsersHelper.createUserReg();
 
-        UserRegistered userRegistered = given()
-                .body(userCreds)
+        UserRegistered userRegistered =
+                given()
+                        .spec(requestSpec)
+                        .body(userCreds)
                 .when()
-                .post("/Account/v1/User")
+                        .post("/Account/v1/User")
                 .then()
-                .log().all()
-                .extract().as(UserRegistered.class);
+                        .log().all()
+                        .spec(responseSpec)
+                        .extract().as(UserRegistered.class);
 
-        Specifications.setRespSpec(responseSpecificationOk200());
+        responseSpec = Specifications.responseSpecificationOk200();
 
-        boolean authorizedWithoutToken = given()
-                .body(userCreds)
+        boolean authorizedWithoutToken =
+                given()
+                        .spec(requestSpec)
+                        .body(userCreds)
                 .when()
-                .post("/Account/v1/Authorized")
+                        .post("/Account/v1/Authorized")
                 .then()
-                .log().all()
-                .extract().as(Boolean.class);
+                        .log().all()
+                        .spec(responseSpec)
+                        .extract().as(Boolean.class);
 
         Assertions.assertFalse(authorizedWithoutToken);
     }
@@ -95,34 +108,44 @@ public class AuthTests {
     @DisplayName("Authorize зарегистрированного пользователя c токеном")
     @Owner("Oleg Zabolotnykh<beyondswamps@gmail.com>")
     public void authorizedWithToken() {
-        Specifications.setSpecifications(requestSpecification(URL), responseSpecificationCreated201());
+        RequestSpecification requestSpec = Specifications.requestSpecification(URL);
+        ResponseSpecification responseSpec = Specifications.responseSpecificationCreated201();
         UserCreds userCreds = UsersHelper.createUserReg();
 
-        UserRegistered userRegistered = given()
-                .body(userCreds)
+        UserRegistered userRegistered =
+                given()
+                        .spec(requestSpec)
+                        .body(userCreds)
                 .when()
-                .post("/Account/v1/User")
+                        .post("/Account/v1/User")
                 .then()
-                .log().all()
-                .extract().as(UserRegistered.class);
+                        .log().all()
+                        .spec(responseSpec)
+                        .extract().as(UserRegistered.class);
 
-        Specifications.setRespSpec(responseSpecificationOk200());
+        responseSpec = Specifications.responseSpecificationOk200();
 
-        TokenGenerated tokenGenerated = given()
-                .body(userCreds)
+        TokenGenerated tokenGenerated =
+                given()
+                        .spec(requestSpec)
+                        .body(userCreds)
                 .when()
-                .post("/Account/v1/GenerateToken")
+                        .post("/Account/v1/GenerateToken")
                 .then()
-                .log().all()
-                .extract().as(TokenGenerated.class);
+                        .log().all()
+                        .spec(responseSpec)
+                        .extract().as(TokenGenerated.class);
 
-        boolean authorizedWithToken = given()
-                .body(userCreds)
+        boolean authorizedWithToken =
+                given()
+                        .spec(requestSpec)
+                        .body(userCreds)
                 .when()
-                .post("/Account/v1/Authorized")
+                        .post("/Account/v1/Authorized")
                 .then()
-                .log().all()
-                .extract().as(Boolean.class);
+                        .log().all()
+                        .spec(responseSpec)
+                        .extract().as(Boolean.class);
 
         Assertions.assertTrue(authorizedWithToken);
     }
