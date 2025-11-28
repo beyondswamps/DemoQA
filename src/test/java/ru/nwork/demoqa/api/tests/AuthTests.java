@@ -24,7 +24,7 @@ public class AuthTests {
     private static final String URL = "https://demoqa.com";
 
     @Test
-    @DisplayName("Регистрация нового пользователя")
+    @DisplayName("Регистрация нового пользователя ")
     @Owner("Oleg Zabolotnykh<beyondswamps@gmail.com>")
     public void registerTest() {
         RequestSpecification requestSpec = Specifications.requestSpecification(URL);
