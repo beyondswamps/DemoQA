@@ -12,7 +12,7 @@ import ru.nwork.demoqa.ui.pages.DraggablePage;
 
 @Feature("Elements")
 @Story("Проверка Drug'n'Drop")
-@DisplayName("Drug'n'Drop объектов ")
+@DisplayName("Drug'n'Drop объектов и проверка")
 public class DragTests extends BaseTest {
     @Test
     @DisplayName("Drag'n'Drop свободно перемещаемого объекта")
