@@ -1,8 +1,5 @@
 #!groovy
 // Run docker build
-options {
-    disableConcurrentBuilds()
-}
 
 pipeline {
     agent {
@@ -12,6 +9,7 @@ pipeline {
     options {
         buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
         timestamps()
+        disableConcurrentBuilds()
     }
 
     stages {
