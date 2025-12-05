@@ -4,6 +4,4 @@ WORKDIR /tests-app
 
 COPY . .
 
-ADD
-
 CMD ["./gradlew", "clean", "test"]
