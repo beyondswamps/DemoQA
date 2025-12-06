@@ -3,17 +3,18 @@
 pipeline {
 
     agent {
-        docker {
-            image 'DemoQA'
-            args '-u root'
-        }
+        label 'master'
+    }
+
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10')
+        disableConcurrentBuilds()
     }
 
     stages {
-
-        stage('Test') {
+        stage('Building image') {
             steps {
-                echo 'Testing...'
+                sh -c 'docker build .'
             }
         }
     }
