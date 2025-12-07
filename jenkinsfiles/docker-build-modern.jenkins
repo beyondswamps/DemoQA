@@ -12,15 +12,20 @@ pipeline {
 
     stages {
         stage('build docker image') {
-            steps {
-                echo '=========================== building image ========================='
-                sh 'docker build -t demoqatests:latest . '
+            agent {
+                dockerfile {
+                    dir 'docker/toolbox'
+                    filename 'Dockerfile-modern'
+                    label 'demoqatests'
+                    additionalBuildArgs '--build-arg version=1.0.3'
+                }
             }
         }
 
-        stage('push docker image to hub') {
+        stage('login docker') {
             steps {
                 echo ' ========================== pushing to hub ========================='
+
             }
         }
     }
