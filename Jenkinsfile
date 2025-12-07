@@ -1,4 +1,4 @@
-#!groovy
+#!/usr/bin/env groovy
 
 pipeline {
     agent {
@@ -6,7 +6,7 @@ pipeline {
     }
 
     options {
-        buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10')
+        buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
         disableConcurrentBuilds()
     }
 
