@@ -12,6 +12,10 @@ pipeline {
         disableConcurrentBuilds()
     }
 
+    triggers {
+        pollSCM('* * * * *')
+    }
+
     stages {
         stage("create docker image") {
             steps {
