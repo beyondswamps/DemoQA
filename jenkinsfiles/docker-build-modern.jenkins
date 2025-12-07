@@ -6,7 +6,7 @@ pipeline {
 
     options {
         timestamps()
-        buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
+        buildDiscarder(logRotator(numToKeepStr: '9', artifactNumToKeepStr: '9'))
         disableConcurrentBuilds()
     }
 
@@ -17,5 +17,13 @@ pipeline {
                 sh 'docker build -t demoqatests:latest . '
             }
         }
+
+        stage('push docker image to hub') {
+            steps {
+                echo ' ========================== pushing to hub ========================='
+            }
+        }
     }
+
+
 }
