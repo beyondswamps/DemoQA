@@ -10,16 +10,12 @@ pipeline {
         disableConcurrentBuilds()
     }
 
+    triggers {
+        pollSCM('* * * * *')
+    }
+
     stages {
         stage('build docker image') {
-            agent {
-                dockerfile {
-                    dir 'docker/toolbox'
-                    filename 'Dockerfile-modern'
-                    label 'demoqatests'
-                    additionalBuildArgs '--build-arg version=1.0.3'
-                }
-            }
             steps {
                 echo '================================='
             }

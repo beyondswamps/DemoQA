@@ -10,6 +10,10 @@ pipeline {
         disableConcurrentBuilds()
     }
 
+    triggers {
+        pollSCM('* * * * *')
+    }
+
     stages {
         stage('Building image') {
             steps {
