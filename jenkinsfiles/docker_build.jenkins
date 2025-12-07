@@ -30,16 +30,17 @@ pipeline {
             steps {
                 echo ' ===================== start building image ============================'
                 dir ('docker/toolbox') {
-                    sh 'docker build -t olegzabolotnykh/toolbox:latest . '
+                    sh 'docker build -t olegzabolotnykh/demoqatests:latest . '
                 }
             }
         }
-
+        /*
         stage('docker push') {
             steps {
                 echo ' ====================== pushing docker image to hub ======================='
                 sh 'docker push olegzabolotnykh/toolbox:latest'
             }
         }
+        */
     }
 }

@@ -1,7 +1,7 @@
-FROM alpine
-RUN apk update --no-cache
-RUN apk add --no-cache curl wget busybox-extras netcat-openbsd python3 py-pip
-RUN python3 -m venv my_project
-RUN source my_project/bin/activate && pip install awscli && deactivate && \
-apk --purge -v del py-pip
-CMD tail -f /dev/null
+FROM eclipse-temurin:17-jdk-jammy
+
+WORKDIR /tests-app
+
+COPY . .
+
+CMD ["./gradlew", "clean", "test"]
