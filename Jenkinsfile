@@ -2,13 +2,13 @@
 
 pipeline {
 
-    agent {
-        label 'master'
-    }
-
     options {
         buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10')
         disableConcurrentBuilds()
+    }
+
+    agent {
+        label 'master'
     }
 
     stages {
