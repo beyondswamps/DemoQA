@@ -17,12 +17,26 @@ pipeline {
     }
 
     stages {
+        stage('docker login') {
+            echo '==================  docker login ==========================='
+            withCredentials([usernamePassword(credentialsId: 'dockerhub_olegzabolotnykh', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                docker login -u $USERNAME -p $PASSWORD
+            }
+        }
+
         stage("create docker image") {
             steps {
-                echo " ===================== start building image ============================"
+                echo ' ===================== start building image ============================'
                 dir ('docker/toolbox') {
                     sh 'docker build -t olegzabolotnykh/toolbox:latest . '
                 }
+            }
+        }
+
+        stage('docker push') {
+            steps {
+                echo ' ====================== pushing docker image to hub ======================='
+                sh 'docker push olegzabolotnykh/toolbox:latest'
             }
         }
     }
