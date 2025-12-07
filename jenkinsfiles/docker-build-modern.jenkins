@@ -14,7 +14,7 @@ pipeline {
         stage('build docker image') {
             steps {
                 echo '=========================== building image ========================='
-                sh 'docker build -t demoqatests:latest'
+                sh 'docker build -t demoqatests:latest . '
             }
         }
     }
