@@ -1,0 +1,21 @@
+#!groovy
+
+pipeline {
+
+    agent any()
+
+    options {
+        timestamps()
+        buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeep: '10'))
+        disableConcurrentBuilds()
+    }
+
+    stages {
+        stage('build docker image') {
+            steps {
+                echo '=========================== building image ========================='
+                sh 'docker build -t demoqatests:latest'
+            }
+        }
+    }
+}
