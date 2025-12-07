@@ -2,11 +2,11 @@
 
 pipeline {
 
-    agent any()
+    agent any
 
     options {
         timestamps()
-        buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeep: '10'))
+        buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
         disableConcurrentBuilds()
     }
 
