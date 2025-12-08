@@ -26,12 +26,10 @@ pipeline {
             }
         }
 
-        stage("create docker image") {
+        stage("build docker image") {
             steps {
                 echo ' ===================== start building image ============================'
-                dir ('docker/toolbox') {
                     sh 'docker build -t olegzabolotnykh/demoqatests:latest -f docker/toolbox/Dockerfile . '
-                }
             }
         }
         /*
